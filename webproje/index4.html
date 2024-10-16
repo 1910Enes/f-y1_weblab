@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilet Seçim Tablosu</title>
+    <style>
+        /* Sayfa genel stil ayarları */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Başlık stil ayarları */
+        h1 {
+            text-align: center;
+            color: #333;
+            padding: 20px 0;
+        }
+
+        /* Tablo genel stil ayarları */
+        table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tablo başlıkları */
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        /* Başlık satırı stil ayarları */
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+        }
+
+        /* Satırlar arası renk geçişleri */
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Hover efekti */
+        tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* İşaretleme kutusu stil ayarları */
+        .checkbox-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            appearance: none;
+            border: 2px solid #4CAF50;
+            border-radius: 3px;
+            outline: none;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Seçim kutusunu ışıklandırma */
+        input[type="checkbox"]:checked {
+            background-color: #4CAF50; /* Yeşil arka plan */
+            border-color: #388E3C; /* Daha koyu yeşil kenar */
+        }
+
+        /* Seçim kutusunun ışıklandırılması için efekt */
+        input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        }
+
+        /* Rezervasyon durumu stil ayarları */
+        .status {
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .status.available {
+            color: #155724; /* Yeşil */
+            background-color: #d4edda; /* Yeşil arka plan */
+        }
+
+        .status.reserved {
+            color: #721c24; /* Kırmızı */
+            background-color: #f8d7da; /* Kırmızı arka plan */
+        }
+
+        /* Responsive ayarları */
+        @media (max-width: 768px) {
+            table {
+                width: 100%;
+            }
+            th, td {
+                font-size: 14px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Bilet Seçim Tablosu</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Film Adı</th>
+                <th>Salon</th>
+                <th>Seans</th>
+                <th>Fiyat (TL)</th>
+                <th>Seç</th>
+                <th>Rezervasyon Durumu</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Avatar 2</td>
+                <td>A Salon</td>
+                <td>12:30</td>
+                <td>50</td>
+                <td><div class="checkbox-container"><input type="checkbox" onchange="toggleSelection(this, 'status1')"></div></td>
+                <td class="status available" id="status1">Alınmadı</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Oppenheimer</td>
+                <td>B Salon</td>
+                <td>14:00</td>
+                <td>60</td>
+                <td><div class="checkbox-container"><input type="checkbox" onchange="toggleSelection(this, 'status2')"></div></td>
+                <td class="status available" id="status2">Alınmadı</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Dune</td>
+                <td>C Salon</td>
+                <td>16:45</td>
+                <td>55</td>
+                <td><div class="checkbox-container"><input type="checkbox" onchange="toggleSelection(this, 'status3')"></div></td>
+                <td class="status available" id="status3">Alınmadı</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Spider-Man: No Way Home</td>
+                <td>D Salon</td>
+                <td>18:30</td>
+                <td>45</td>
+                <td><div class="checkbox-container"><input type="checkbox" onchange="toggleSelection(this, 'status4')"></div></td>
+                <td class="status available" id="status4">Alınmadı</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>The Batman</td>
+                <td>E Salon</td>
+                <td>20:00</td>
+                <td>70</td>
+                <td><div class="checkbox-container"><input type="checkbox" onchange="toggleSelection(this, 'status5')"></div></td>
+                <td class="status available" id="status5">Alınmadı</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Satırın seçilip seçilmediğini kontrol eden fonksiyon
+        function toggleSelection(checkbox, statusId) {
+            var row = checkbox.parentNode.parentNode; // Checkbox'ın bulunduğu satırı seç
+            var statusCell = document.getElementById(statusId); // Durum hücresini seç
+            if (checkbox.checked) {
+                row.classList.add('selected'); // Seçildiyse yeşil arka plan ekle
+                statusCell.classList.remove('available'); // Alınmadı durumunu kaldır
+                statusCell.classList.add('reserved'); // Rezervasyon durumu
+                statusCell.innerText = 'Alındı'; // Durumu güncelle
+            } else {
+                row.classList.remove('selected'); // Seçim iptal edilirse yeşil arka planı kaldır
+                statusCell.classList.remove('reserved'); // Rezervasyon durumunu kaldır
+                statusCell.classList.add('available'); // Alınmadı durumunu geri yükle
+                statusCell.innerText = 'Alınmadı'; // Durumu geri güncelle
+            }
+        }
+    </script>
+
+</body>
+</html>

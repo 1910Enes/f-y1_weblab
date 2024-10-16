@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechMarket</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    .product-card {
+      height: 400px; /* Kartların yüksekliği */
+    }
+
+    .card-body {
+      flex-grow: 1; /* Kart içeriğinin esnemesine izin verme */
+    }
+
+    body {
+      background-color: #e0e0e0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .navbar {
+      margin-bottom: 20px;
+      background-color: #0056b3;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand, .nav-link {
+      color: #f0f0f0;
+      font-weight: bold;
+    }
+
+    .navbar-brand:hover, .nav-link:hover {
+      color: #dcdcdc;
+    }
+
+    .dropdown-menu a {
+      color: #343a40;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #0056b3;
+      color: white;
+    }
+
+    .jumbotron {
+      background-color: #0056b3;
+      color: white;
+      padding: 3rem 2rem;
+      border-radius: 0.5rem;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      background-image: url('images/welcome-background.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .jumbotron h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .jumbotron p.lead {
+      font-size: 1.5rem;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .carousel-inner img {
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .container {
+      margin-bottom: 20px;
+    }
+
+    .footer {
+      background-color: #003f7f; /* Koyu mavi arka plan */
+      color: #f0f0f0;
+      padding: 40px 0;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .footer h4 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .social-icons {
+      margin-bottom: 20px;
+    }
+
+    .social-icons a {
+      color: white;
+      font-size: 1.8rem;
+      margin: 0 15px;
+      transition: transform 0.3s, color 0.3s;
+      padding: 10px;
+    }
+
+    .social-icons a:hover {
+      transform: scale(1.2); /* Hoverda büyütme efekti */
+      color: #dcdcdc; /* Hoverda renk değişimi */
+    }
+
+    .footer p {
+      margin: 10px 0;
+    }
+
+    .product-card {
+      border: none;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      transition: transform 0.2s;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+    }
+
+    .product-card img {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .new-badge {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .btn-primary {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+
+    .btn-primary:hover {
+      background-color: #003f7f;
+      border-color: #003f7f;
+    }
+
+    .discount-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #dc3545;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">TechMarket</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Anasayfa</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Fiyatlandırma</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Kategoriler
+          </a>
+          <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
+            <a class="dropdown-item" href="#">Akıllı Telefonlar</a>
+            <a class="dropdown-item" href="#">Bilgisayarlar</a>
+            <a class="dropdown-item" href="#">Aksesuarlar</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">İletişim</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><span class="badge badge-pill new-badge">Yeni</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Carousel -->
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <a href="link1.html"><img class="d-block w-100" src="images/images111.jpeg" alt="First slide"></a>
+      </div>
+      <div class="carousel-item">
+        <a href="link2.html"><img class="d-block w-100" src="images/images222.jpeg" alt="Second slide"></a>
+      </div>
+      <div class="carousel-item">
+        <a href="link3.html"><img class="d-block w-100" src="images/images333.jpg" alt="Third slide"></a>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Önceki</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Sonraki</span>
+    </a>
+  </div>
+
+  <!-- Jumbotron -->
+  <div class="jumbotron">
+    <h1 class="display-4">TechMarket'e Hoş Geldiniz!</h1>
+    <p class="lead">En iyi teknoloji ürünlerini uygun fiyatlarla sunuyoruz.</p>
+    <hr class="my-4">
+    <p>Kampanyalarımızı ve özel indirimleri kaçırmayın!</p>
+    <a class="btn btn-primary btn-lg" href="#" role="button">Hemen Alışverişe Başla!</a>
+  </div>
+
+  <!-- Ürünler -->
+  <div class="container">
+    <h2 class="text-center my-4">En Popüler Ürünler</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="product-card card">
+          <img src="images/product1.jpg" class="card-img-top" alt="Telefon">
+          <div class="card-body">
+            <h5 class="card-title">Akıllı Telefon</h5>
+            <p class="card-text">15.000TL!</p>
+            <span class="discount-badge">%10 İndirim!</span>
+            <a href="#" class="btn btn-primary">Sepete Ekle</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="product-card card">
+          <img src="images/product2.jpg" class="card-img-top" alt="Laptop">
+          <div class="card-body">
+            <h5 class="card-title">Laptop</h5>
+            <p class="card-text">25.000TL!</p>
+            <span class="discount-badge">%15 İndirim!</span>
+            <a href="#" class="btn btn-primary">Sepete Ekle</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="product-card card">
+          <img src="images/product3.jpg" class="card-img-top" alt="Kulaklık">
+          <div class="card-body">
+            <h5 class="card-title">Kulaklık</h5>
+            <p class="card-text">7500 TL!</p>
+            <span class="discount-badge">%20 İndirim!</span>
+            <a href="#" class="btn btn-primary">Sepete Ekle</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- İletişim Formu -->
+  <div class="container">
+    <h2 class="text-center my-4">Bize Ulaşın</h2>
+    <form>
+      <div class="form-group">
+        <label for="name">Adınız</label>
+        <input type="text" class="form-control" id="name" placeholder="Adınızı girin" required>
+      </div>
+      <div class="form-group">
+        <label for="email">E-posta Adresiniz</label>
+        <input type="email" class="form-control" id="email" placeholder="E-posta adresinizi girin" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Mesajınız</label>
+        <textarea class="form-control" id="message" rows="4" placeholder="Mesajınızı yazın" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Gönder</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <h4>TechMarket</h4>
+    <p>En iyi teknoloji ürünleri burada!</p>
+    <div class="social-icons">
+      <a href="#" class="fab fa-facebook-f"></a>
+      <a href="#" class="fab fa-twitter"></a>
+      <a href="#" class="fab fa-instagram"></a>
+      <a href="#" class="fab fa-linkedin-in"></a>
+    </div>
+    <p>İletişim: +90 123 456 7890 | info@techmarket.com</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
